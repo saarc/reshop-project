@@ -44,6 +44,12 @@ docker exec -e "CORE_PEER_LOCALMSPID=Org2MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/h
 
 sleep 3
 
+# Join peer0.org3.reshop.com to the channel.
+docker exec -e "CORE_PEER_LOCALMSPID=Org3MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org3.reshop.com/msp" peer0.org3.reshop.com peer channel join -b /etc/hyperledger/configtx/rechannel.block
+
+sleep 3
+
+
 # anchor ORG1 rechannel update
 docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.reshop.com/msp" peer0.org1.reshop.com peer channel update -f /etc/hyperledger/configtx/Org1MSPanchors.tx -c rechannel -o orderer.reshop.com:7050
 
@@ -53,3 +59,14 @@ sleep 3
 docker exec -e "CORE_PEER_LOCALMSPID=Org2MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org2.reshop.com/msp" peer0.org2.reshop.com peer channel update -f /etc/hyperledger/configtx/Org2MSPanchors.tx -c rechannel -o orderer.reshop.com:7050
 
 sleep 3
+
+# anchor ORG2 rechannel update
+docker exec -e "CORE_PEER_LOCALMSPID=Org3MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org3.reshop.com/msp" peer0.org3.reshop.com peer channel update -f /etc/hyperledger/configtx/Org3MSPanchors.tx -c rechannel -o orderer.reshop.com:7050
+
+sleep 3
+
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.reshop.com/msp" peer0.org1.reshop.com peer channel list
+docker exec -e "CORE_PEER_LOCALMSPID=Org2MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org2.reshop.com/msp" peer0.org2.reshop.com peer channel list
+docker exec -e "CORE_PEER_LOCALMSPID=Org3MSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org3.reshop.com/msp" peer0.org3.reshop.com peer channel list
+
+
